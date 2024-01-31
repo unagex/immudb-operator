@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -25,6 +26,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
+	k8serrors "k8s.io/apimachinery/pkg/api/errors"
+
 	"github.com/go-logr/logr"
 )
 
@@ -40,6 +43,22 @@ type ImmudbReconciler struct {
 // +kubebuilder:rbac:groups=immudb.io,resources=immudbs/finalizers,verbs=update
 func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	r.Log = log.FromContext(ctx).WithName("Reconciler")
+
+	immudb := &immudbiov1.Immudb{}
+	err := r.Get(ctx, req.NamespacedName, immudb)
+	if err != nil {
+		if k8serrors.IsNotFound(err) {
+			r.Log.Info("immudb cr has been deleted")
+			return ctrl.Result{}, nil
+		}
+
+		return ctrl.Result{}, fmt.Errorf("error getting immudb cr: %w", err)
+	}
+
+	err = r.CreateDatabase(ctx, immudb)
+	if err != nil {
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }
