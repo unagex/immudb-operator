@@ -36,7 +36,7 @@ func (r *ImmudbReconciler) CreateDatabase(ctx context.Context, immudb *immudbiov
 		// update if statefulset config is wrong
 		if *sts.Spec.Replicas != *immudb.Spec.Replicas {
 			sts = r.GetStatefulset(immudb)
-			r.Log.Info("updating statefulset replicas field")
+			r.Log.Info(fmt.Sprintf("updating statefulset replicas field to %d", *immudb.Spec.Replicas))
 			err = r.Update(ctx, sts)
 			if err != nil {
 				return fmt.Errorf("error updating statefulset replicas field: %w", err)
@@ -45,11 +45,12 @@ func (r *ImmudbReconciler) CreateDatabase(ctx context.Context, immudb *immudbiov
 		}
 	}
 
-	// Update status if not sync with statefulset
+	// update status if not sync with statefulset
 	diff := immudb.Status.ReadyReplicas != sts.Status.ReadyReplicas
 	if diff {
 		immudb.Status.ReadyReplicas = sts.Status.ReadyReplicas
 		immudb.Status.Ready = false
+		// TODO: instance is ready if quorum and not if different.
 		if immudb.Status.ReadyReplicas == *immudb.Spec.Replicas {
 			immudb.Status.Ready = true
 		}
