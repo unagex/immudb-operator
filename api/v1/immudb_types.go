@@ -32,6 +32,12 @@ type ImmudbSpec struct {
 // ImmudbStatus defines the observed state of Immudb
 type ImmudbStatus struct {
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// Number of ready replicas
+	ReadyReplicas int32 `json:"readyReplicas"`
+
+	// Instance ready to accept connections
+	Ready bool `json:"ready"`
 }
 
 //+kubebuilder:object:root=true

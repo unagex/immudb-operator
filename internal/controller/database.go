@@ -29,17 +29,35 @@ func (r *ImmudbReconciler) CreateDatabase(ctx context.Context, immudb *immudbiov
 		if err != nil {
 			return fmt.Errorf("error creating statefulset: %w", err)
 		}
+		return nil
 	} else if err != nil {
 		return fmt.Errorf("error getting statefulset: %w", err)
 	} else {
 		// update if statefulset config is wrong
 		if *sts.Spec.Replicas != *immudb.Spec.Replicas {
-			sts := r.GetStatefulset(immudb)
+			sts = r.GetStatefulset(immudb)
 			r.Log.Info("updating statefulset replicas field")
 			err = r.Update(ctx, sts)
 			if err != nil {
 				return fmt.Errorf("error updating statefulset replicas field: %w", err)
 			}
+			return nil
+		}
+	}
+
+	// Update status if not sync with statefulset
+	diff := immudb.Status.ReadyReplicas != sts.Status.ReadyReplicas
+	if diff {
+		immudb.Status.ReadyReplicas = sts.Status.ReadyReplicas
+		immudb.Status.Ready = false
+		if immudb.Status.ReadyReplicas == *immudb.Spec.Replicas {
+			immudb.Status.Ready = true
+		}
+		r.Log.Info(fmt.Sprintf("update immudb status readyReplicas field to %d/%d",
+			immudb.Status.ReadyReplicas, *immudb.Spec.Replicas))
+		err = r.Status().Update(ctx, immudb)
+		if err != nil {
+			return fmt.Errorf("error updating statefulset status readyReplicas field: %w", err)
 		}
 	}
 
