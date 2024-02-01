@@ -1,12 +1,6 @@
 apiVersion: immudb.io/v1
 kind: Immudb
 metadata:
-  labels:
-    app.kubernetes.io/name: immudb
-    app.kubernetes.io/instance: immudb-sample
-    app.kubernetes.io/part-of: immudb-operator
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: immudb-operator
   name: immudb-sample
 spec:
-  # TODO(user): Add fields here
+  replicas: 3

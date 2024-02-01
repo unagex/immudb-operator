@@ -34,14 +34,19 @@ spec:
           spec:
             description: ImmudbSpec defines the desired state of Immudb
             properties:
-              foo:
-                description: Foo is an example field of Immudb. Edit immudb_types.go
-                  to remove/update
-                type: string
+              replicas:
+                description: Number of desired immudb pods
+                format: int32
+                minimum: 1
+                type: integer
+            required:
+            - replicas
             type: object
           status:
             description: ImmudbStatus defines the observed state of Immudb
             type: object
+        required:
+        - spec
         type: object
     served: true
     storage: true

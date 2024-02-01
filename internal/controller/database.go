@@ -45,6 +45,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 			Labels:          common.GetLabels(immudb.Name),
 		},
 		Spec: appsv1.StatefulSetSpec{
+			Replicas: &immudb.Spec.Replicas,
 			Selector: &metav1.LabelSelector{
 				MatchLabels: ls,
 			},
