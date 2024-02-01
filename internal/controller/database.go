@@ -21,15 +21,26 @@ func (r *ImmudbReconciler) CreateDatabase(ctx context.Context, immudb *immudbiov
 		Name:      immudb.Name,
 	}, sts)
 
+	// create if statefulset does not exist
 	if err != nil && k8serrors.IsNotFound(err) {
 		sts := r.GetStatefulset(immudb)
-		r.Log.Info("creating database statefulset")
+		r.Log.Info("creating statefulset")
 		err := r.Create(ctx, sts)
 		if err != nil {
-			return fmt.Errorf("error creating database statefulset: %w", err)
+			return fmt.Errorf("error creating statefulset: %w", err)
 		}
 	} else if err != nil {
-		return fmt.Errorf("error getting database statefulset: %w", err)
+		return fmt.Errorf("error getting statefulset: %w", err)
+	} else {
+		// update if statefulset config is wrong
+		if *sts.Spec.Replicas != *immudb.Spec.Replicas {
+			sts := r.GetStatefulset(immudb)
+			r.Log.Info("updating statefulset replicas field")
+			err = r.Update(ctx, sts)
+			if err != nil {
+				return fmt.Errorf("error updating statefulset replicas field: %w", err)
+			}
+		}
 	}
 
 	return nil
@@ -45,7 +56,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 			Labels:          common.GetLabels(immudb.Name),
 		},
 		Spec: appsv1.StatefulSetSpec{
-			Replicas: &immudb.Spec.Replicas,
+			Replicas: immudb.Spec.Replicas,
 			Selector: &metav1.LabelSelector{
 				MatchLabels: ls,
 			},

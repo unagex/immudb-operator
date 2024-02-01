@@ -26,7 +26,7 @@ type ImmudbSpec struct {
 
 	// Number of desired immudb pods
 	// +kubebuilder:validation:Minimum=1
-	Replicas int32 `json:"replicas"`
+	Replicas *int32 `json:"replicas"`
 }
 
 // ImmudbStatus defines the observed state of Immudb
