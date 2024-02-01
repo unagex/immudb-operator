@@ -20,10 +20,15 @@ import (
 	"context"
 	"fmt"
 
+	appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
+
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
@@ -48,7 +53,6 @@ func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 	err := r.Get(ctx, req.NamespacedName, immudb)
 	if err != nil {
 		if k8serrors.IsNotFound(err) {
-			r.Log.Info("immudb cr has been deleted")
 			return ctrl.Result{}, nil
 		}
 
@@ -65,7 +69,25 @@ func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
+	// filter to requeue when a dependant resource is created/updated/deleted
+	filter := handler.EnqueueRequestsFromMapFunc(func(_ context.Context, o client.Object) []reconcile.Request {
+		ls := o.GetLabels()
+		if ls["app"] != "immudb" {
+			return nil
+		}
+
+		return []reconcile.Request{
+			{
+				NamespacedName: types.NamespacedName{
+					Namespace: o.GetNamespace(),
+					Name:      o.GetName(),
+				},
+			},
+		}
+	})
+
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&immudbiov1.Immudb{}).
+		Watches(&appsv1.StatefulSet{}, filter).
 		Complete(r)
 }

@@ -42,6 +42,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 			Name:            immudb.Name,
 			Namespace:       immudb.Namespace,
 			OwnerReferences: common.GetOwnerReferences(immudb),
+			Labels:          common.GetLabels(immudb.Name),
 		},
 		Spec: appsv1.StatefulSetSpec{
 			Selector: &metav1.LabelSelector{
