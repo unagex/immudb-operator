@@ -21,6 +21,7 @@ import (
 	"fmt"
 
 	appsv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -64,6 +65,11 @@ func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 		return ctrl.Result{}, err
 	}
 
+	err = r.ManageServices(ctx, immudb)
+	if err != nil {
+		return ctrl.Result{}, err
+	}
+
 	return ctrl.Result{}, nil
 }
 
@@ -72,7 +78,7 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	// filter to requeue when a dependant resource is created/updated/deleted
 	filter := handler.EnqueueRequestsFromMapFunc(func(_ context.Context, o client.Object) []reconcile.Request {
 		ls := o.GetLabels()
-		if ls["app.kubernetes.io/name"] != "immudb" {
+		if ls["app.kubernetes.io/managed-by"] != "immudb-operator" {
 			return nil
 		}
 
@@ -80,7 +86,7 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 			{
 				NamespacedName: types.NamespacedName{
 					Namespace: o.GetNamespace(),
-					Name:      o.GetName(),
+					Name:      ls["app.kubernetes.io/instance"],
 				},
 			},
 		}
@@ -89,5 +95,6 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&immudbiov1.Immudb{}).
 		Watches(&appsv1.StatefulSet{}, filter).
+		Watches(&corev1.Service{}, filter).
 		Complete(r)
 }

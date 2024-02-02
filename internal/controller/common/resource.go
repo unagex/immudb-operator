@@ -7,8 +7,9 @@ import (
 
 func GetLabels(name string) map[string]string {
 	return map[string]string{
-		"app.kubernetes.io/name":     "immudb",
-		"app.kubernetes.io/instance": name,
+		"app.kubernetes.io/name":       "immudb",
+		"app.kubernetes.io/instance":   name,
+		"app.kubernetes.io/managed-by": "immudb-operator",
 	}
 }
 

@@ -23,27 +23,29 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov
 	}, sts)
 
 	// create if statefulset does not exist
-	if err != nil && k8serrors.IsNotFound(err) {
+	if k8serrors.IsNotFound(err) {
 		sts := r.GetStatefulset(immudb)
 		r.Log.Info("creating statefulset")
 		err := r.Create(ctx, sts)
-		if err != nil {
+		if err != nil && k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating statefulset: %w", err)
 		}
 		return nil
-	} else if err != nil {
+	}
+
+	if err != nil {
 		return fmt.Errorf("error getting statefulset: %w", err)
-	} else {
-		// update if statefulset config is wrong
-		if *sts.Spec.Replicas != *immudb.Spec.Replicas {
-			sts = r.GetStatefulset(immudb)
-			r.Log.Info(fmt.Sprintf("updating statefulset replicas field to %d", *immudb.Spec.Replicas))
-			err = r.Update(ctx, sts)
-			if err != nil {
-				return fmt.Errorf("error updating statefulset replicas field: %w", err)
-			}
-			return nil
+	}
+
+	// update if statefulset config is wrong
+	if *sts.Spec.Replicas != *immudb.Spec.Replicas {
+		sts = r.GetStatefulset(immudb)
+		r.Log.Info(fmt.Sprintf("updating statefulset field spec.replicas to %d", *immudb.Spec.Replicas))
+		err = r.Update(ctx, sts)
+		if err != nil {
+			return fmt.Errorf("error updating statefulset field spec.replicas: %w", err)
 		}
+		return nil
 	}
 
 	// update status if not sync with statefulset
@@ -55,11 +57,11 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov
 		if immudb.Status.ReadyReplicas == *immudb.Spec.Replicas {
 			immudb.Status.Ready = true
 		}
-		r.Log.Info(fmt.Sprintf("update immudb status readyReplicas field to %d/%d",
+		r.Log.Info(fmt.Sprintf("update immudb field status.readyReplicas to %d/%d",
 			immudb.Status.ReadyReplicas, *immudb.Spec.Replicas))
 		err = r.Status().Update(ctx, immudb)
 		if err != nil {
-			return fmt.Errorf("error updating statefulset status readyReplicas field: %w", err)
+			return fmt.Errorf("error updating immudb field status.readyReplicas: %w", err)
 		}
 	}
 
@@ -107,7 +109,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 								ProbeHandler: corev1.ProbeHandler{
 									HTTPGet: &corev1.HTTPGetAction{
 										Path:   "/readyz",
-										Port:   intstr.IntOrString{StrVal: "metrics", Type: intstr.String},
+										Port:   intstr.FromString("metrics"),
 										Scheme: corev1.URISchemeHTTP,
 									},
 								},
@@ -117,7 +119,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 								ProbeHandler: corev1.ProbeHandler{
 									HTTPGet: &corev1.HTTPGetAction{
 										Path:   "/readyz",
-										Port:   intstr.IntOrString{StrVal: "metrics", Type: intstr.String},
+										Port:   intstr.FromString("metrics"),
 										Scheme: corev1.URISchemeHTTP,
 									},
 								},
