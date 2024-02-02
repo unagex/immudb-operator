@@ -72,7 +72,7 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	// filter to requeue when a dependant resource is created/updated/deleted
 	filter := handler.EnqueueRequestsFromMapFunc(func(_ context.Context, o client.Object) []reconcile.Request {
 		ls := o.GetLabels()
-		if ls["app"] != "immudb" {
+		if ls["app.kubernetes.io/name"] != "immudb" {
 			return nil
 		}
 
