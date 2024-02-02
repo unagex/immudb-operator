@@ -24,8 +24,9 @@ import (
 type ImmudbSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Number of desired immudb pods
+	// Number of desired immudb pods. At the moment, you can just have 1 replica of immudb. We are working to raise that limit.
 	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=1
 	Replicas *int32 `json:"replicas"`
 }
 

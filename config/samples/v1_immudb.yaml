@@ -3,4 +3,4 @@ kind: Immudb
 metadata:
   name: immudb-sample
 spec:
-  replicas: 3
+  replicas: 1

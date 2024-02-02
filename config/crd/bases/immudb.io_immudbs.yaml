@@ -35,8 +35,10 @@ spec:
             description: ImmudbSpec defines the desired state of Immudb
             properties:
               replicas:
-                description: Number of desired immudb pods
+                description: Number of desired immudb pods. At the moment, you can
+                  just have 1 replica of immudb. We are working to raise that limit.
                 format: int32
+                maximum: 1
                 minimum: 1
                 type: integer
             required:
