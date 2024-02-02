@@ -13,29 +13,17 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 )
 
-var (
-	httpPorts = []corev1.ServicePort{
-		{
-			Name:       "http",
-			TargetPort: intstr.FromString("http"),
-			Port:       8080,
-		},
-		{
-			Name:       "metrics",
-			TargetPort: intstr.FromString("metrics"),
-			Port:       9497,
-		}}
-
-	grpcPorts = []corev1.ServicePort{
-		{
-			Name:       "grpc",
-			TargetPort: intstr.FromString("grpc"),
-			Port:       3322,
-		},
-	}
-)
-
 func (r *ImmudbReconciler) ManageServices(ctx context.Context, immudb *immudbiov1.Immudb) error {
+	err := r.ManageServiceHTTP(ctx, immudb)
+	if err != nil {
+		return err
+	}
+
+	err = r.ManageServiceGRPC(ctx, immudb)
+	return err
+}
+
+func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *immudbiov1.Immudb) error {
 	svc := &corev1.Service{}
 	err := r.Get(ctx, types.NamespacedName{
 		Namespace: immudb.Namespace,
@@ -63,6 +51,34 @@ func (r *ImmudbReconciler) ManageServices(ctx context.Context, immudb *immudbiov
 	return nil
 }
 
+func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *immudbiov1.Immudb) error {
+	svc := &corev1.Service{}
+	err := r.Get(ctx, types.NamespacedName{
+		Namespace: immudb.Namespace,
+		Name:      immudb.Name + "-grpc",
+	}, svc)
+
+	// create if service does not exist
+	if k8serrors.IsNotFound(err) {
+		svc = r.GetServiceGRPC(immudb)
+		r.Log.Info("creating service grpc")
+		err = r.Create(ctx, svc)
+		if err != nil && k8serrors.IsAlreadyExists(err) {
+			return fmt.Errorf("error creating service grpc: %w", err)
+		}
+		return nil
+	}
+
+	// requeue if we cannot Get the resource
+	if err != nil {
+		return fmt.Errorf("error getting service grpc: %w", err)
+	}
+
+	// TODO: check if service config is good and patch if that's the case.
+
+	return nil
+}
+
 func (r *ImmudbReconciler) GetServiceHTTP(immudb *immudbiov1.Immudb) *corev1.Service {
 	ls := common.GetLabels(immudb.Name)
 	return &corev1.Service{
@@ -74,7 +90,39 @@ func (r *ImmudbReconciler) GetServiceHTTP(immudb *immudbiov1.Immudb) *corev1.Ser
 		},
 		Spec: corev1.ServiceSpec{
 			Selector: ls,
-			Ports:    httpPorts,
+			Ports: []corev1.ServicePort{
+				{
+					Name:       "http",
+					TargetPort: intstr.FromString("http"),
+					Port:       8080,
+				},
+				{
+					Name:       "metrics",
+					TargetPort: intstr.FromString("metrics"),
+					Port:       9497,
+				}},
+		},
+	}
+}
+
+func (r *ImmudbReconciler) GetServiceGRPC(immudb *immudbiov1.Immudb) *corev1.Service {
+	ls := common.GetLabels(immudb.Name)
+	return &corev1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:            immudb.Name + "-grpc",
+			Namespace:       immudb.Namespace,
+			OwnerReferences: common.GetOwnerReferences(immudb),
+			Labels:          ls,
+		},
+		Spec: corev1.ServiceSpec{
+			Selector: ls,
+			Ports: []corev1.ServicePort{
+				{
+					Name:       "grpc",
+					TargetPort: intstr.FromString("grpc"),
+					Port:       3322,
+				},
+			},
 		},
 	}
 }
