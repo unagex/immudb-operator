@@ -73,7 +73,7 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 			Name:            immudb.Name,
 			Namespace:       immudb.Namespace,
 			OwnerReferences: common.GetOwnerReferences(immudb),
-			Labels:          common.GetLabels(immudb.Name),
+			Labels:          ls,
 		},
 		Spec: appsv1.StatefulSetSpec{
 			Replicas: immudb.Spec.Replicas,
