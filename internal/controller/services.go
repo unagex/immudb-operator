@@ -33,17 +33,17 @@ func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *immudb
 	// create if service does not exist
 	if k8serrors.IsNotFound(err) {
 		svc = r.GetServiceHTTP(immudb)
-		r.Log.Info("creating service")
+		r.Log.Info("creating service http")
 		err = r.Create(ctx, svc)
 		if err != nil && !k8serrors.IsAlreadyExists(err) {
-			return fmt.Errorf("error creating service: %w", err)
+			return fmt.Errorf("error creating service http: %w", err)
 		}
 		return nil
 	}
 
 	// requeue if we cannot Get the resource
 	if err != nil {
-		return fmt.Errorf("error getting service: %w", err)
+		return fmt.Errorf("error getting service http: %w", err)
 	}
 
 	// TODO: check if service config is good and patch if that's the case.
