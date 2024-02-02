@@ -10,6 +10,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 
 	"k8s.io/apimachinery/pkg/types"
 )
@@ -100,6 +101,25 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 								{
 									Name:          "metrics",
 									ContainerPort: 9497,
+								},
+							},
+							ReadinessProbe: &corev1.Probe{
+								ProbeHandler: corev1.ProbeHandler{
+									HTTPGet: &corev1.HTTPGetAction{
+										Path:   "/readyz",
+										Port:   intstr.IntOrString{StrVal: "metrics", Type: intstr.String},
+										Scheme: corev1.URISchemeHTTP,
+									},
+								},
+							},
+							LivenessProbe: &corev1.Probe{
+								FailureThreshold: 9,
+								ProbeHandler: corev1.ProbeHandler{
+									HTTPGet: &corev1.HTTPGetAction{
+										Path:   "/readyz",
+										Port:   intstr.IntOrString{StrVal: "metrics", Type: intstr.String},
+										Scheme: corev1.URISchemeHTTP,
+									},
 								},
 							},
 						},
