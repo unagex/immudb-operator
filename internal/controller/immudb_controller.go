@@ -59,7 +59,7 @@ func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 		return ctrl.Result{}, fmt.Errorf("error getting immudb cr: %w", err)
 	}
 
-	err = r.CreateDatabase(ctx, immudb)
+	err = r.ManageDatabase(ctx, immudb)
 	if err != nil {
 		return ctrl.Result{}, err
 	}

@@ -15,7 +15,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 )
 
-func (r *ImmudbReconciler) CreateDatabase(ctx context.Context, immudb *immudbiov1.Immudb) error {
+func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov1.Immudb) error {
 	sts := &appsv1.StatefulSet{}
 	err := r.Get(ctx, types.NamespacedName{
 		Namespace: immudb.Namespace,
