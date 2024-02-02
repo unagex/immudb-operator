@@ -27,7 +27,7 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov
 		sts := r.GetStatefulset(immudb)
 		r.Log.Info("creating statefulset")
 		err := r.Create(ctx, sts)
-		if err != nil && k8serrors.IsAlreadyExists(err) {
+		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating statefulset: %w", err)
 		}
 		return nil

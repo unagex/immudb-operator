@@ -52,11 +52,10 @@ func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 
 	immudb := &immudbiov1.Immudb{}
 	err := r.Get(ctx, req.NamespacedName, immudb)
+	if k8serrors.IsNotFound(err) {
+		return ctrl.Result{}, nil
+	}
 	if err != nil {
-		if k8serrors.IsNotFound(err) {
-			return ctrl.Result{}, nil
-		}
-
 		return ctrl.Result{}, fmt.Errorf("error getting immudb cr: %w", err)
 	}
 

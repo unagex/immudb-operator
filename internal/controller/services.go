@@ -35,7 +35,7 @@ func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *immudb
 		svc = r.GetServiceHTTP(immudb)
 		r.Log.Info("creating service")
 		err = r.Create(ctx, svc)
-		if err != nil && k8serrors.IsAlreadyExists(err) {
+		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating service: %w", err)
 		}
 		return nil
@@ -63,7 +63,7 @@ func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *immudb
 		svc = r.GetServiceGRPC(immudb)
 		r.Log.Info("creating service grpc")
 		err = r.Create(ctx, svc)
-		if err != nil && k8serrors.IsAlreadyExists(err) {
+		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating service grpc: %w", err)
 		}
 		return nil
