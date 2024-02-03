@@ -39,7 +39,6 @@ spec:
                 description: The image name to use for PostgreSQL containers.
                 type: string
               imagePullPolicy:
-                default: Always
                 description: ImagePullPolicy is used to determine when Kubernetes
                   will attempt to pull (download) container images.
                 enum:
