@@ -1,7 +1,7 @@
 package common
 
 import (
-	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
+	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

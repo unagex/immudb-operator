@@ -1,4 +1,4 @@
-module github.com/MathieuCesbron/immudb-operator
+module github.com/unagex/immudb-operator
 
 go 1.20
 

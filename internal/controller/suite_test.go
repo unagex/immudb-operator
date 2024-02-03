@@ -30,7 +30,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
+	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 

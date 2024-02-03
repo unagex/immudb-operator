@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
+	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/go-logr/logr"

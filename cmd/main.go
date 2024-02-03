@@ -31,8 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
-	"github.com/MathieuCesbron/immudb-operator/internal/controller"
+	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
+	"github.com/unagex/immudb-operator/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 

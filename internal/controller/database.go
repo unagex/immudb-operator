@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	immudbiov1 "github.com/MathieuCesbron/immudb-operator/api/v1"
-	"github.com/MathieuCesbron/immudb-operator/internal/controller/common"
+	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
+	"github.com/unagex/immudb-operator/internal/controller/common"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
