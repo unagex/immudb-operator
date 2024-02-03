@@ -17,12 +17,24 @@ limitations under the License.
 package v1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // ImmudbSpec defines the desired state of Immudb
 type ImmudbSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// The image name to use for PostgreSQL containers.
+	// +kubebuilder:default="codenotary/immudb:latest"
+	// +optional
+	Image string `json:"image,omitempty"`
+
+	// ImagePullPolicy is used to determine when Kubernetes will attempt to
+	// pull (download) container images.
+	// +kubebuilder:validation:Enum={Always,Never,IfNotPresent}
+	// +optional
+	ImagePullPolicy corev1.PullPolicy `json:"imagePullPolicy,omitempty"`
 
 	// Number of desired immudb pods. At the moment, you can just have 1 replica of immudb. We are working to raise that limit.
 	// +kubebuilder:validation:Minimum=1

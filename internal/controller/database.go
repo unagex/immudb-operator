@@ -102,8 +102,9 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.Sta
 					},
 					Containers: []corev1.Container{
 						{
-							Image: "codenotary/immudb:1.2.2",
-							Name:  "immudb",
+							Image:           immudb.Spec.Image,
+							ImagePullPolicy: immudb.Spec.ImagePullPolicy,
+							Name:            "immudb",
 							Ports: []corev1.ContainerPort{
 								{
 									Name:          "http",

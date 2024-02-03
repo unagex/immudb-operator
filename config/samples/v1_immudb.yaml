@@ -3,4 +3,6 @@ kind: Immudb
 metadata:
   name: immudb-sample
 spec:
+  # image: "codenotary/immudb:latest"
+  # imagePullPolicy: "IfNotPresent"
   replicas: 1

@@ -34,6 +34,19 @@ spec:
           spec:
             description: ImmudbSpec defines the desired state of Immudb
             properties:
+              image:
+                default: codenotary/immudb:latest
+                description: The image name to use for PostgreSQL containers.
+                type: string
+              imagePullPolicy:
+                default: Always
+                description: ImagePullPolicy is used to determine when Kubernetes
+                  will attempt to pull (download) container images.
+                enum:
+                - Always
+                - Never
+                - IfNotPresent
+                type: string
               replicas:
                 description: Number of desired immudb pods. At the moment, you can
                   just have 1 replica of immudb. We are working to raise that limit.
