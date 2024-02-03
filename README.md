@@ -1,6 +1,7 @@
 # Unagex Kubernetes Operator for immudb
 
 ![Go version](https://img.shields.io/github/go-mod/go-version/unagex/immudb-operator)
+![Kubernetes Version](https://img.shields.io/badge/Kubernetes-1.18%2B-green.svg)
 
 ## Features
 
