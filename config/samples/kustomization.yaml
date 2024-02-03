@@ -1,4 +1,0 @@
-## Append samples of your project ##
-resources:
-  - v1_immudb.yaml
-#+kubebuilder:scaffold:manifestskustomizesamples
