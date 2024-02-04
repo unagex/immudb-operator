@@ -1,0 +1,17 @@
+operator:
+  image:
+    repository: immudb-operator-controller
+    # tag default to .Chart.AppVersion if not set
+    tag: ""
+    pullPolicy: IfNotPresent
+  # resources example:
+  # resources: 
+  #   limits:
+  #     cpu: 100m
+  #     memory: 128Mi
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
+  resources: {}
+
+

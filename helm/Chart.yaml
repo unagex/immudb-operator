@@ -1,0 +1,7 @@
+apiVersion: v2
+name: immudb-operator
+description: Helm chart to deploy [unagex-immudb-operator](https://github.com/unagex/immudb-operator)
+type: application
+version: 0.0.1
+appVersion: 0.0.1
+home: https://github.com/unagex/immudb-operator
