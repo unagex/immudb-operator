@@ -44,9 +44,6 @@ type ImmudbReconciler struct {
 	Log    logr.Logger
 }
 
-// +kubebuilder:rbac:groups=immudb.io,resources=immudbs,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=immudb.io,resources=immudbs/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=immudb.io,resources=immudbs/finalizers,verbs=update
 func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	r.Log = log.FromContext(ctx).WithName("Reconciler")
 
