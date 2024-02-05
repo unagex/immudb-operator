@@ -13,3 +13,9 @@
 ## Documentation
 
 TODO: create documentation
+
+```
+helm repo add immudb-operator-charts https://unagex.github.io/immudb-operator
+helm repo update
+helm install immudb-operator immudb-operator-charts/immudb-operator
+```
