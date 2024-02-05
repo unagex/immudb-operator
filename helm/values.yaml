@@ -4,6 +4,7 @@ operator:
     # tag default to .Chart.AppVersion if not set
     tag: ""
     pullPolicy: IfNotPresent
+
   # resources example:
   # resources: 
   #   limits:
@@ -14,4 +15,7 @@ operator:
   #     memory: 128Mi
   resources: {}
 
-
+  # labels example:
+  # labels:
+  #  app.kubernetes.io/part-of: example
+  labels: {}
