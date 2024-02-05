@@ -1,5 +1,5 @@
 VERSION ?= 0.0.1
-IMG ?= ghcr.io/unagex/immmudb-operator/controller:${VERSION}
+IMG ?= ghcr.io/unagex/immudb-operator/controller:${VERSION}
 
 OPERATOR_SDK_VERSION ?= v1.33.0
 
