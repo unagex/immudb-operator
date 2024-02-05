@@ -1,6 +1,6 @@
 operator:
   image:
-    repository: immudb-operator-controller
+    repository: ghcr.io/unagex/immmudb-operator/controller
     # tag default to .Chart.AppVersion if not set
     tag: ""
     pullPolicy: IfNotPresent
