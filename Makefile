@@ -32,7 +32,7 @@ help: ## Display this help.
 .PHONY: manifests
 manifests: controller-gen ## Generate CRD in config/crd/bases and in helm chart.
 	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=config/crd/bases
-	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=helm/crd
+	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/operator/templates/crds/
 
 .PHONY: generate
 generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
