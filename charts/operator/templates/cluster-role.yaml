@@ -3,10 +3,10 @@ kind: ClusterRole
 metadata:
   name: {{ .Chart.Name }}
 rules:
-  - apiGroups: ["immudb.io"]
+  - apiGroups: ["unagex.com"]
     resources: ["immudbs"]
     verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["immudb.io"]
+  - apiGroups: ["unagex.com"]
     resources: ["immudbs/status"]
     verbs: ["update"]
   - apiGroups: ["apps"]

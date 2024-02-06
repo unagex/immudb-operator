@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
+	unagexcomv1 "github.com/unagex/immudb-operator/api/v1"
 	"github.com/unagex/immudb-operator/internal/controller/common"
 	corev1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
@@ -13,7 +13,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 )
 
-func (r *ImmudbReconciler) ManageServices(ctx context.Context, immudb *immudbiov1.Immudb) error {
+func (r *ImmudbReconciler) ManageServices(ctx context.Context, immudb *unagexcomv1.Immudb) error {
 	err := r.ManageServiceHTTP(ctx, immudb)
 	if err != nil {
 		return err
@@ -23,7 +23,7 @@ func (r *ImmudbReconciler) ManageServices(ctx context.Context, immudb *immudbiov
 	return err
 }
 
-func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *immudbiov1.Immudb) error {
+func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *unagexcomv1.Immudb) error {
 	svc := &corev1.Service{}
 	err := r.Get(ctx, types.NamespacedName{
 		Namespace: immudb.Namespace,
@@ -51,7 +51,7 @@ func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *immudb
 	return nil
 }
 
-func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *immudbiov1.Immudb) error {
+func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *unagexcomv1.Immudb) error {
 	svc := &corev1.Service{}
 	err := r.Get(ctx, types.NamespacedName{
 		Namespace: immudb.Namespace,
@@ -79,7 +79,7 @@ func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *immudb
 	return nil
 }
 
-func (r *ImmudbReconciler) GetServiceHTTP(immudb *immudbiov1.Immudb) *corev1.Service {
+func (r *ImmudbReconciler) GetServiceHTTP(immudb *unagexcomv1.Immudb) *corev1.Service {
 	ls := common.GetLabels(immudb.Name)
 	return &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
@@ -105,7 +105,7 @@ func (r *ImmudbReconciler) GetServiceHTTP(immudb *immudbiov1.Immudb) *corev1.Ser
 	}
 }
 
-func (r *ImmudbReconciler) GetServiceGRPC(immudb *immudbiov1.Immudb) *corev1.Service {
+func (r *ImmudbReconciler) GetServiceGRPC(immudb *unagexcomv1.Immudb) *corev1.Service {
 	ls := common.GetLabels(immudb.Name)
 	return &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{

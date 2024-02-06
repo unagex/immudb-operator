@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
+	unagexcomv1 "github.com/unagex/immudb-operator/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/go-logr/logr"
@@ -47,7 +47,7 @@ type ImmudbReconciler struct {
 func (r *ImmudbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	r.Log = log.FromContext(ctx).WithName("Reconciler")
 
-	immudb := &immudbiov1.Immudb{}
+	immudb := &unagexcomv1.Immudb{}
 	err := r.Get(ctx, req.NamespacedName, immudb)
 	if k8serrors.IsNotFound(err) {
 		return ctrl.Result{}, nil
@@ -89,7 +89,7 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	})
 
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&immudbiov1.Immudb{}).
+		For(&unagexcomv1.Immudb{}).
 		Watches(&appsv1.StatefulSet{}, filter).
 		Watches(&corev1.Service{}, filter).
 		Complete(r)

@@ -1,4 +1,4 @@
-apiVersion: immudb.io/v1
+apiVersion: unagex.com/v1
 kind: Immudb
 metadata:
   name: immudb-sample

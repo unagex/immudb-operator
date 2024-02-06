@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	immudbiov1 "github.com/unagex/immudb-operator/api/v1"
+	unagexcomv1 "github.com/unagex/immudb-operator/api/v1"
 	"github.com/unagex/immudb-operator/internal/controller/common"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -16,7 +16,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 )
 
-func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov1.Immudb) error {
+func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *unagexcomv1.Immudb) error {
 	sts := &appsv1.StatefulSet{}
 	err := r.Get(ctx, types.NamespacedName{
 		Namespace: immudb.Namespace,
@@ -69,7 +69,7 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *immudbiov
 	return nil
 }
 
-func (r *ImmudbReconciler) GetStatefulset(immudb *immudbiov1.Immudb) *appsv1.StatefulSet {
+func (r *ImmudbReconciler) GetStatefulset(immudb *unagexcomv1.Immudb) *appsv1.StatefulSet {
 	ls := common.GetLabels(immudb.Name)
 	return &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
