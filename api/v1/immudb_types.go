@@ -27,19 +27,36 @@ type ImmudbSpec struct {
 
 	// The image name to use for PostgreSQL containers.
 	// +kubebuilder:default="codenotary/immudb:latest"
-	// +optional
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// ImagePullPolicy is used to determine when Kubernetes will attempt to
 	// pull (download) container images.
 	// +kubebuilder:validation:Enum={Always,Never,IfNotPresent}
-	// +optional
+	// +kubebuilder:default="IfNotPresent"
+	// +kubebuilder:validation:Optional
 	ImagePullPolicy corev1.PullPolicy `json:"imagePullPolicy,omitempty"`
 
 	// Number of desired immudb pods. At the moment, you can just have 1 replica of immudb. We are working to raise that limit.
 	// +kubebuilder:validation:Minimum=1
 	// +kubebuilder:validation:Maximum=1
+	// +kubebuilder:validation:Required
 	Replicas *int32 `json:"replicas"`
+
+	// +kubebuilder:validation:Required
+	Volume ImmudbVolumeSpec `json:"volume"`
+}
+
+type ImmudbVolumeSpec struct {
+	// StorageClassName defined for the volume.
+	// +kubebuilder:validation:Optional
+	StorageClassName *string `json:"storageClassName,omitempty"`
+
+	// Size of the volume.
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Pattern=`^\d+(Gi|Gb|Ki|)$`
+	// +kubebuilder:validation:Pattern=`^\d+(Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)$`
+	Size string `json:"size"`
 }
 
 // ImmudbStatus defines the observed state of Immudb

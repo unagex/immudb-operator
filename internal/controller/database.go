@@ -164,12 +164,12 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *unagexcomv1.Immudb) *appsv1.St
 						Name: immudb.Name + "-storage",
 					},
 					Spec: corev1.PersistentVolumeClaimSpec{
-						// TODO: Add storageClassName option
-						AccessModes: []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce},
+						StorageClassName: immudb.Spec.Volume.StorageClassName,
+						AccessModes:      []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce},
 						Resources: corev1.ResourceRequirements{
 							Requests: corev1.ResourceList{
 								// TODO: Resize would be possible depending on the cloud provider.
-								corev1.ResourceStorage: resource.MustParse("1Gi"),
+								corev1.ResourceStorage: resource.MustParse(immudb.Spec.Volume.Size),
 							},
 						},
 					},

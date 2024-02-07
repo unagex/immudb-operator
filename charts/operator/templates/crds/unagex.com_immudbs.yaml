@@ -39,6 +39,7 @@ spec:
                 description: The image name to use for PostgreSQL containers.
                 type: string
               imagePullPolicy:
+                default: IfNotPresent
                 description: ImagePullPolicy is used to determine when Kubernetes
                   will attempt to pull (download) container images.
                 enum:
@@ -53,8 +54,21 @@ spec:
                 maximum: 1
                 minimum: 1
                 type: integer
+              volume:
+                properties:
+                  size:
+                    description: Size of the volume.
+                    pattern: ^\d+(Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)$
+                    type: string
+                  storageClassName:
+                    description: StorageClassName defined for the volume.
+                    type: string
+                required:
+                - size
+                type: object
             required:
             - replicas
+            - volume
             type: object
           status:
             description: ImmudbStatus defines the observed state of Immudb
