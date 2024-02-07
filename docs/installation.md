@@ -75,6 +75,9 @@ kubectl port-forward services/immudb-sample-http 8080:8080
 
 ## Install on Google Kubernetes Engine (GKE)
 
+You should have an GKE cluster already running. See the [official documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster) if that's not the case.
+
+
 ## Install on Azure Kubernetes Service (AKS)
 
 ## Generic installation with kubectl only
