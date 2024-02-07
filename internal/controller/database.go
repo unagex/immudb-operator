@@ -12,6 +12,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	"k8s.io/utils/ptr"
 
 	"k8s.io/apimachinery/pkg/types"
 )
@@ -99,6 +100,13 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *unagexcomv1.Immudb) *appsv1.St
 								},
 							},
 						},
+					},
+					SecurityContext: &corev1.PodSecurityContext{
+						RunAsNonRoot:        ptr.To(true),
+						RunAsUser:           ptr.To[int64](3322),
+						RunAsGroup:          ptr.To[int64](3322),
+						FSGroup:             ptr.To[int64](3322),
+						FSGroupChangePolicy: ptr.To[corev1.PodFSGroupChangePolicy](corev1.FSGroupChangeOnRootMismatch),
 					},
 					Containers: []corev1.Container{
 						{
