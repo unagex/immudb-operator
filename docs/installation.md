@@ -80,8 +80,26 @@ kubectl port-forward services/immudb-sample-http 8080:8080
 
 ## Install on Google Kubernetes Engine (GKE)
 
-You should have an GKE cluster already running. See the [official documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster) if that's not the case.
+You should have a GKE cluster already running. See the [official documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster) if that's not the case. The following has been tested on a GKE autopilot mode.
+1. Add the helm repo.
+```bash
+helm repo add immudb-operator-charts https://unagex.github.io/immudb-operator
+helm repo update
+```
+2. Install the operator in the namespace `immudb-operator`. See [operator configuration](#operator-configuration) for more customization.
+```bash
+helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-operator --create-namespace
+```
+Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
+3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+```bash
+kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
+```
+4. Access immudb web console on port 8080.
+```bash
+kubectl port-forward services/immudb-sample-http 8080:8080
+```
 
 ## Install on Azure Kubernetes Service (AKS)
 
