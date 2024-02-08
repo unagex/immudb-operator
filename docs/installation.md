@@ -4,7 +4,7 @@
 - [Install on Amazon Elastic Kubernetes Service (EKS)](#install-on-amazon-elastic-kubernetes-service-eks)
 - [Install on Google Kubernetes Engine (GKE)](#install-on-google-kubernetes-engine-gke)
 - [Install on Azure Kubernetes Service (AKS)](#install-on-azure-kubernetes-service-aks)
-- [Generic installation with kubectl only](#generic-installation-with-kubectl-only)
+- [Operator Configuration](#operator-configuration)
 
 ## Install on minikube
 
@@ -102,8 +102,6 @@ kubectl port-forward services/immudb-sample-http 8080:8080
 ```
 
 ## Install on Azure Kubernetes Service (AKS)
-
-## Generic installation with kubectl only
 
 # Operator configuration
 
