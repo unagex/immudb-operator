@@ -23,9 +23,10 @@ helm install immudb-operator immudb-operator-charts/immudb-operator
 ```
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
+⬇ See documentation below for more options ⬇
 
 ## Documentation
 
-* [Installation](./docs/installation.md)
-* [Configuration](./docs/configuration.md)
+* [Operator Installation](./docs/installation.md)
+* [Immudb Configuration](./docs/configuration.md)
 * [Contribution](./docs/contribution.md)

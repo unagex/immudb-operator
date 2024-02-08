@@ -1,1 +1,1 @@
-# Configuration
+# Immudb Configuration

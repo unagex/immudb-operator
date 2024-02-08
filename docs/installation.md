@@ -1,4 +1,4 @@
-# Installation
+# Operator Installation
 
 - [Install on Minikube](#install-on-minikube)
 - [Install on Amazon Elastic Kubernetes Service (EKS)](#install-on-amazon-elastic-kubernetes-service-eks)

@@ -3,9 +3,11 @@
 Thanks for taking the time to contribute to immudb-operator.
 
 ## How to make PR
+
 You can create a PR into `main` when your feature is ready. We will review it within 2 days.
 
 ## Local development with minikube
+
 1. To try a new feature, first create a minikube cluster.
 ```bash
 minikube start
@@ -22,7 +24,6 @@ make install run
 ```
 You should see the following log:
 ![image](./local-dev.png)
-
 5. The operator is now running on minikube, you can create the custom resource and see how the operator handles it.
 ```bash
 kubectl apply -f config/samples/v1_immudb.yaml
