@@ -163,7 +163,8 @@ func (r *ImmudbReconciler) GetStatefulset(immudb *unagexcomv1.Immudb) *appsv1.St
 			VolumeClaimTemplates: []corev1.PersistentVolumeClaim{
 				{
 					ObjectMeta: metav1.ObjectMeta{
-						Name: immudb.Name + "-storage",
+						Name:            immudb.Name + "-storage",
+						OwnerReferences: common.GetOwnerReferences(immudb),
 					},
 					Spec: corev1.PersistentVolumeClaimSpec{
 						StorageClassName: immudb.Spec.Volume.StorageClassName,
