@@ -27,10 +27,12 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *unagexcom
 	// create if statefulset does not exist
 	if k8serrors.IsNotFound(err) {
 		sts := r.GetStatefulset(immudb)
-		r.Log.Info("creating statefulset")
 		err := r.Create(ctx, sts)
 		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating statefulset: %w", err)
+		}
+		if err == nil {
+			r.Log.Info("statefulset created")
 		}
 		return nil
 	}
@@ -42,11 +44,11 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *unagexcom
 	// update if statefulset config is wrong
 	if *sts.Spec.Replicas != *immudb.Spec.Replicas {
 		sts = r.GetStatefulset(immudb)
-		r.Log.Info(fmt.Sprintf("updating statefulset field spec.replicas to %d", *immudb.Spec.Replicas))
 		err = r.Update(ctx, sts)
 		if err != nil {
 			return fmt.Errorf("error updating statefulset field spec.replicas: %w", err)
 		}
+		r.Log.Info(fmt.Sprintf("updated statefulset field spec.replicas to %d", *immudb.Spec.Replicas))
 		return nil
 	}
 
@@ -59,12 +61,12 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *unagexcom
 		if immudb.Status.ReadyReplicas == *immudb.Spec.Replicas {
 			immudb.Status.Ready = true
 		}
-		r.Log.Info(fmt.Sprintf("update immudb field status.readyReplicas to %d/%d",
-			immudb.Status.ReadyReplicas, *immudb.Spec.Replicas))
 		err = r.Status().Update(ctx, immudb)
 		if err != nil {
 			return fmt.Errorf("error updating immudb field status.readyReplicas: %w", err)
 		}
+		r.Log.Info(fmt.Sprintf("updated immudb field status.readyReplicas to %d/%d",
+			immudb.Status.ReadyReplicas, *immudb.Spec.Replicas))
 	}
 
 	return nil

@@ -33,10 +33,12 @@ func (r *ImmudbReconciler) ManageServiceHTTP(ctx context.Context, immudb *unagex
 	// create if service does not exist
 	if k8serrors.IsNotFound(err) {
 		svc = r.GetServiceHTTP(immudb)
-		r.Log.Info("creating service http")
 		err = r.Create(ctx, svc)
 		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating service http: %w", err)
+		}
+		if err == nil {
+			r.Log.Info("service http created")
 		}
 		return nil
 	}
@@ -61,10 +63,12 @@ func (r *ImmudbReconciler) ManageServiceGRPC(ctx context.Context, immudb *unagex
 	// create if service does not exist
 	if k8serrors.IsNotFound(err) {
 		svc = r.GetServiceGRPC(immudb)
-		r.Log.Info("creating service grpc")
 		err = r.Create(ctx, svc)
 		if err != nil && !k8serrors.IsAlreadyExists(err) {
 			return fmt.Errorf("error creating service grpc: %w", err)
+		}
+		if err == nil {
+			r.Log.Info("service grpc created")
 		}
 		return nil
 	}
