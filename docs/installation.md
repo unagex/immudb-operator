@@ -58,17 +58,22 @@ You should have an EKS cluster already running. See the [official documentation]
  }]
 }
 ```
-3. Install the operator in the namespace `immudb-operator`. See [operator configuration](#operator-configuration) for more customization.
+3. Add the helm repo.
+```bash
+helm repo add immudb-operator-charts https://unagex.github.io/immudb-operator
+helm repo update
+```
+4. Install the operator in the namespace `immudb-operator`. See [operator configuration](#operator-configuration) for more customization.
 ```bash
 helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-operator --create-namespace
 ```
 Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
-4. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+5. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
-5. Access immudb web console on port 8080.
+6. Access immudb web console on port 8080.
 ```bash
 kubectl port-forward services/immudb-sample-http 8080:8080
 ```
