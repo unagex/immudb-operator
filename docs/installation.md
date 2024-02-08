@@ -106,3 +106,16 @@ kubectl port-forward services/immudb-sample-http 8080:8080
 ## Generic installation with kubectl only
 
 # Operator configuration
+
+The operator Helm chart is deployed by default with [this values.yaml](/charts/operator/values.yaml). The following values can be overriden:
+
+| Name | Type | Default value
+| --- | --- | --- |
+| operator.image.repository | string | ghcr.io/unagex/immudb-operator/controller |
+| operator.image.tag | string | default to latest version at time of installation |
+| operator.image.pullPolicy | string | IfNotPresent |
+| resources.limits.cpu | string | nil |
+| resources.limits.memory | string | nil |
+| resources.requests.cpu | string | nil |
+| resources.requests.memory | string | nil |
+| labels | map[string]string | nil |
