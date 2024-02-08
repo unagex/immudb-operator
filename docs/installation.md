@@ -111,9 +111,9 @@ The operator Helm chart is deployed by default with [this values.yaml](/charts/o
 
 | Name | Type | Default value
 | --- | --- | --- |
-| operator.image.repository | string | ghcr.io/unagex/immudb-operator/controller |
-| operator.image.tag | string | default to latest version at time of installation |
-| operator.image.pullPolicy | string | IfNotPresent |
+| operator.image.repository | string | "ghcr.io/unagex/immudb-operator/controller" |
+| operator.image.tag | string | Default to latest version at time of installation. |
+| operator.image.pullPolicy | string | "IfNotPresent" |
 | resources.limits.cpu | string | nil |
 | resources.limits.memory | string | nil |
 | resources.requests.cpu | string | nil |
