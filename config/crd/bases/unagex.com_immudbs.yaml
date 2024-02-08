@@ -48,6 +48,7 @@ spec:
                 - IfNotPresent
                 type: string
               replicas:
+                default: 1
                 description: Number of desired immudb pods. At the moment, you can
                   just have 1 replica of immudb. We are working to raise that limit.
                 format: int32
@@ -67,7 +68,6 @@ spec:
                 - size
                 type: object
             required:
-            - replicas
             - volume
             type: object
           status:
