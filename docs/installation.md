@@ -102,7 +102,26 @@ kubectl port-forward services/immudb-sample-http 8080:8080
 ```
 
 ## Install on Azure Kubernetes Service (AKS)
+You should have a AKS cluster already running. See the [official documentation](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-portal?tabs=azure-cli) if that's not the case.
+1. Add the helm repo.
+```bash
+helm repo add immudb-operator-charts https://unagex.github.io/immudb-operator
+helm repo update
+```
+2. Install the operator in the namespace `immudb-operator`. See [operator configuration](#operator-configuration) for more customization.
+```bash
+helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-operator --create-namespace
+```
+Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
+3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+```bash
+kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
+```
+4. Access immudb web console on port 8080.
+```bash
+kubectl port-forward services/immudb-sample-http 8080:8080
+```
 # Operator configuration
 
 The operator Helm chart is deployed by default with [this values.yaml](/charts/operator/values.yaml). The following values can be overriden:
