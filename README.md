@@ -9,7 +9,7 @@
 
 - Create immudb clusters defined as custom resources
 - Customize storage provisioning for AWS, GCP, AZURE, ...
-- Update immudb version and config
+- Update immudb version and config (soon)
 - Export metrics to Prometheus
 
 ## Quickstart
