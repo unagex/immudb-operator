@@ -23,7 +23,7 @@ helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-op
 ```
 Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
-4. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+4. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration.md) for more customization.
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
@@ -69,7 +69,7 @@ helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-op
 ```
 Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
-5. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+5. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration.md) for more customization.
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
@@ -92,7 +92,7 @@ helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-op
 ```
 Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
-3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration.md) for more customization.
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
@@ -114,7 +114,7 @@ helm install immudb-operator immudb-operator-charts/immudb-operator -n immudb-op
 ```
 Congratulations ! The operator is now installed. To test it, you can deploy a basic immudb (optional):
 
-3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration) for more customization.
+3. Deploy an immudb database in the namespace `default`. See [immudb configuration](./configuration.md) for more customization.
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/config/samples/v1_immudb.yaml
 ```
