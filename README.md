@@ -30,4 +30,6 @@ kubectl apply -f https://raw.githubusercontent.com/unagex/immudb-operator/main/c
 * [Operator Installation](./docs/installation.md)
 * [Immudb Configuration](./docs/configuration.md)
 * [Operator Overview](./docs/overview.md)
+<br></br>
 * [Contribution](./docs/contribution.md)
+* [Contact](mailto:mathieu.cesbron@protonmail.com)
