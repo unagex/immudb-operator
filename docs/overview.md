@@ -8,5 +8,5 @@ The operator watches `Immudb resources`. See the default operator behavior in th
 ## **Pro Tips :bulb:**
 1. Deleting the `immudb resource` deletes the database and all its associated resources (services, persistantVolumeClaim, ...).
 2. You can create as much `immudb resources` as you want. The limit is your cluster infrastructure.
-3. The operator is a `Deployment`. You can check his pod log to debug.
+3. The operator is a `Deployment`. You can debug by checking his pod logs.
 4. Check the field status.ready of the `immudb resource` to know when the immudb is ready to accept connections.
