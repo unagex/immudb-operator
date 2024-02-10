@@ -21,4 +21,7 @@ The resource `status` is updated by the immudb operator. It gives real-time stat
 | Name | Type | Description |
 | --- | --- | --- |
 | ready | bool | The database can be used when the value is `true`.|
-| readyReplicas | int |  Number of immudb replicas in a ready state.
+| readyReplicas | int |  Number of immudb replicas in a ready state.|
+| hosts.GRPC | string | Host to access database with GRPC.|
+| hosts.HTTP | string | Host to access database with HTTP.|
+| hosts.Metrics | string | Host to access database metrics for Prometheus.|
