@@ -37,7 +37,7 @@ Click on the first URL returned to access the immudb web console.
 
 You should have an EKS cluster already running. See the [official documentation](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html) if that's not the case.
 1. Install the Amazon EBS CSI driver add-on on your EKS cluster. See the [official documentation](https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html) to add it.
-2. Grant permissions for your EKS cluster to interact with Amazon EBS volumes, you need to update the IAM roles associated with your EKS nodes. Here is the necessary policy to attach to your cluster role:
+2. Grant permissions for your EKS cluster to interact with Amazon EBS volumes, you need to update the IAM roles associated with your EKS nodes. Here is the necessary policy to attach to your cluster role.
 ```json
 {
  "Version": "2012-10-17",
