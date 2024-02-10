@@ -64,11 +64,26 @@ type ImmudbVolumeSpec struct {
 type ImmudbStatus struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Number of ready replicas
+	// Number of ready replicas.
 	ReadyReplicas int32 `json:"readyReplicas"`
 
-	// Instance ready to accept connections
+	// Instance ready to accept connections.
 	Ready bool `json:"ready"`
+
+	// Hosts to connect to the database.
+	// +kubebuilder:validation:Optional
+	Hosts *HostsStatus `json:"hosts"`
+}
+
+type HostsStatus struct {
+	// +kubebuilder:validation:Required
+	HTTP string `json:"HTTP"`
+
+	// +kubebuilder:validation:Required
+	Metrics string `json:"Metrics"`
+
+	// +kubebuilder:validation:Required
+	GRPC string `json:"GRPC"`
 }
 
 //+kubebuilder:object:root=true

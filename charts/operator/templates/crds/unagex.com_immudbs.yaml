@@ -73,11 +73,25 @@ spec:
           status:
             description: ImmudbStatus defines the observed state of Immudb
             properties:
+              hosts:
+                description: Hosts to connect to the database.
+                properties:
+                  GRPC:
+                    type: string
+                  HTTP:
+                    type: string
+                  Metrics:
+                    type: string
+                required:
+                - GRPC
+                - HTTP
+                - Metrics
+                type: object
               ready:
-                description: Instance ready to accept connections
+                description: Instance ready to accept connections.
                 type: boolean
               readyReplicas:
-                description: Number of ready replicas
+                description: Number of ready replicas.
                 format: int32
                 type: integer
             required:

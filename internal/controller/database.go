@@ -57,10 +57,18 @@ func (r *ImmudbReconciler) ManageDatabase(ctx context.Context, immudb *unagexcom
 	if diff {
 		immudb.Status.ReadyReplicas = sts.Status.ReadyReplicas
 		immudb.Status.Ready = false
+		immudb.Status.Hosts = nil
+
 		// TODO: instance is ready if quorum and not if different.
 		if immudb.Status.ReadyReplicas == *immudb.Spec.Replicas {
 			immudb.Status.Ready = true
+			immudb.Status.Hosts = &unagexcomv1.HostsStatus{
+				HTTP:    fmt.Sprintf("%s-http.%s.svc.cluster.local:8080", immudb.Name, immudb.Namespace),
+				Metrics: fmt.Sprintf("%s-http.%s.svc.cluster.local:9497/metrics", immudb.Name, immudb.Namespace),
+				GRPC:    fmt.Sprintf("%s-grpc.%s.svc.cluster.local:3322", immudb.Name, immudb.Namespace),
+			}
 		}
+
 		err = r.Status().Update(ctx, immudb)
 		if err != nil {
 			return fmt.Errorf("error updating immudb field status.readyReplicas: %w", err)
