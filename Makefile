@@ -99,12 +99,13 @@ uninstall: manifests ## Uninstall CRDs from the K8s cluster specified in ~/.kube
 	kubectl delete --ignore-not-found=true -f config/crd --recursive
 
 .PHONY: deploy
-deploy: manifests ## Deploy controller to the K8s cluster specified in ~/.kube/config.
-	## TODO: add deploy
+deploy: manifests ## Deploy controller to minikube
+	minikube image load ${IMG}
+	helm install immudb-operator charts/operator
 
 .PHONY: undeploy
-undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
-	## TODO: add undeploy
+undeploy: ## Undeploy controller from minikube
+	helm uninstall immudb-operator
 
 ##@ Build Dependencies
 
