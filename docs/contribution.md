@@ -24,6 +24,7 @@ make install run
 ```
 You should see the following log:
 ![image](./local-dev.png)
+
 5. The operator is now running on minikube, you can create the custom resource and see how the operator handles it.
 ```bash
 kubectl apply -f config/samples/v1_immudb.yaml
