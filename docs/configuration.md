@@ -16,7 +16,7 @@ The following `spec values` can be updated.
 
 ## Immudb Status
 
-The resource `status` is updated by the immudb operator. It gives real-time status of the database.
+The `status` field of the `Immudb` resource is updated by the immudb operator. It gives real-time status of the database.
 
 | Name | Type | Description |
 | --- | --- | --- |
