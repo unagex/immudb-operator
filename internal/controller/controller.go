@@ -26,6 +26,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 
+	knetworkingv1 "k8s.io/api/networking/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -97,5 +98,6 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&unagexcomv1.Immudb{}).
 		Watches(&appsv1.StatefulSet{}, filter).
 		Watches(&corev1.Service{}, filter).
+		Watches(&knetworkingv1.Ingress{}, filter).
 		Complete(r)
 }
