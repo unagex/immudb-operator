@@ -9,3 +9,11 @@ spec:
   volume:
     # storageClassName: "standard"
     size: 1Gi
+  ingress:
+    enabled: false
+    # ingressClassName: nginx
+    # host: example.com
+    # tls: 
+    #   - hosts: 
+    #     - example.com
+    #     secretName : immudb-sample-secret

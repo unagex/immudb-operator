@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oula-immudb-http
+  namespace: default
+spec:
+  rules:
+  - host: immudb-example.localhost
+    http:
+      paths:
+      - backend:
+          service:
+            name: oula-immudb-http
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}

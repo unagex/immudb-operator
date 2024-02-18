@@ -18,6 +18,7 @@ package v1
 
 import (
 	corev1 "k8s.io/api/core/v1"
+	knetworkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -46,6 +47,9 @@ type ImmudbSpec struct {
 
 	// +kubebuilder:validation:Required
 	Volume ImmudbVolumeSpec `json:"volume"`
+
+	// +kubebuilder:validation:Required
+	Ingress ImmudbIngressSpec `json:"ingress"`
 }
 
 type ImmudbVolumeSpec struct {
@@ -58,6 +62,21 @@ type ImmudbVolumeSpec struct {
 	// +kubebuilder:validation:Pattern=`^\d+(Gi|Gb|Ki|)$`
 	// +kubebuilder:validation:Pattern=`^\d+(Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)$`
 	Size string `json:"size"`
+}
+
+type ImmudbIngressSpec struct {
+	// +kubebuilder:validation:Required
+	Enabled bool `json:"enabled"`
+
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default=nginx
+	IngressClassName *string `json:"ingressClassName"`
+
+	// +kubebuilder:validation:Optional
+	TLS []knetworkingv1.IngressTLS `json:"tls"`
+
+	// +kubebuilder:validation:Optional
+	Host string `json:"host"`
 }
 
 // ImmudbStatus defines the observed state of Immudb
