@@ -17,6 +17,8 @@ The following `spec values` can be updated.
 | ingress.ingressClassName | string | "nginx" | Ingress class name. |
 | ingress.TLS | []knetworkingv1.IngressTLS | nil | TLS for the ingress. |
 | ingress.Host | string | "" | Host of the ingress. |
+| serviceMonitor.enabled | bool | No default value, mandatory to set. | Enabling of the service monitor.
+| serviceMonitor.Labels | map[string]string | nil | Labels of the service monitor. It should be configured so that the service monitor is selected by Prometheus.
 
 ## Immudb Status
 
