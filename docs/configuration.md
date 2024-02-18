@@ -13,6 +13,10 @@ The following `spec values` can be updated.
 | replicas | int | 1 | Number of replicas of immudb image. The value can only be 1 at the moment. The immudb team is working hard in adding replication in the future. |
 | volume.storageClassName | string | Name of the default storageClass of the cluster.  | StorageClassName of the database. |
 | volume.size | string | No default value, mandatory to set.  | Size of the database, e.g., 5Mi, 10Gi.  |
+| ingress.enabled | bool | No default value, mandatory to set. | Enabling of ingress resource. |
+| ingress.ingressClassName | string | "nginx" | Ingress class name. |
+| ingress.TLS | []knetworkingv1.IngressTLS | nil | TLS for the ingress. |
+| ingress.Host | string | "" | Host of the ingress. |
 
 ## Immudb Status
 
