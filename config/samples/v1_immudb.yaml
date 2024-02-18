@@ -17,3 +17,7 @@ spec:
     #   - hosts: 
     #     - example.com
     #     secretName : immudb-sample-secret
+  serviceMonitor:
+    enabled: false
+    # labels:
+    #   app.kubernetes.io/name: immudb

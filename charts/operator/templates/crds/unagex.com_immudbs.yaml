@@ -93,6 +93,18 @@ spec:
                 maximum: 1
                 minimum: 1
                 type: integer
+              serviceMonitor:
+                properties:
+                  enabled:
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: Labels Prometheus should be configured to watch.
+                    type: object
+                required:
+                - enabled
+                type: object
               volume:
                 properties:
                   size:
@@ -107,6 +119,7 @@ spec:
                 type: object
             required:
             - ingress
+            - serviceMonitor
             - volume
             type: object
           status:

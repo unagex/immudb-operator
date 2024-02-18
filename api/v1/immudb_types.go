@@ -50,6 +50,9 @@ type ImmudbSpec struct {
 
 	// +kubebuilder:validation:Required
 	Ingress ImmudbIngressSpec `json:"ingress"`
+
+	// +kubebuilder:validation:Required
+	ServiceMonitor ImmudbServiceMonitorSpec `json:"serviceMonitor"`
 }
 
 type ImmudbVolumeSpec struct {
@@ -77,6 +80,15 @@ type ImmudbIngressSpec struct {
 
 	// +kubebuilder:validation:Optional
 	Host string `json:"host"`
+}
+
+type ImmudbServiceMonitorSpec struct {
+	// +kubebuilder:validation:Required
+	Enabled bool `json:"enabled"`
+
+	// Labels Prometheus should be configured to watch.
+	// +kubebuilder:validation:Optional
+	Labels map[string]string `json:"labels"`
 }
 
 // ImmudbStatus defines the observed state of Immudb
