@@ -8,6 +8,7 @@ import (
 	"github.com/unagex/immudb-operator/internal/controller/common"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/types"
 
 	promv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
@@ -51,7 +52,7 @@ func (r *ImmudbReconciler) GetServiceMonitor(immudb *unagexcomv1.Immudb) *promv1
 			Name:            immudb.Name,
 			Namespace:       immudb.Namespace,
 			OwnerReferences: common.GetOwnerReferences(immudb),
-			Labels:          immudb.Spec.ServiceMonitor.Labels,
+			Labels:          labels.Merge(ls, immudb.Spec.ServiceMonitor.Labels),
 		},
 		Spec: promv1.ServiceMonitorSpec{
 			Selector: metav1.LabelSelector{
