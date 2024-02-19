@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   immudb-operator:
   - apiVersion: v2
+    appVersion: 0.0.8
+    created: "2024-02-19T16:26:58.873843169Z"
+    description: Helm chart to deploy [unagex-immudb-operator](https://github.com/unagex/immudb-operator)
+    digest: 7fe459fb9f303b1af27eacbd57b33150939a6462c92620123a0152dda91ae26f
+    home: https://github.com/unagex/immudb-operator
+    name: immudb-operator
+    type: application
+    urls:
+    - https://github.com/unagex/immudb-operator/releases/download/immudb-operator-0.0.8/immudb-operator-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
     appVersion: 0.0.7
     created: "2024-02-18T18:13:56.240319144Z"
     description: Helm chart to deploy [unagex-immudb-operator](https://github.com/unagex/immudb-operator)
@@ -78,4 +89,4 @@ entries:
     urls:
     - https://github.com/unagex/immudb-operator/releases/download/immudb-operator-0.0.1/immudb-operator-0.0.1.tgz
     version: 0.0.1
-generated: "2024-02-18T18:13:56.240374197Z"
+generated: "2024-02-19T16:26:58.873885709Z"
