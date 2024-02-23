@@ -23,9 +23,8 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
-      - name: 'Build Inventory Image'
+      - name: 'Build and push image'
         run: |
           # read the helm chart version
           export VERSION=$(grep version charts/operator/Chart.yaml | awk '{print $2}')
-          make docker-build
-          make docker-push
+          make docker-buildx
