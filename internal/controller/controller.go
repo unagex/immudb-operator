@@ -32,7 +32,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	promv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	unagexcomv1 "github.com/unagex/immudb-operator/api/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 
@@ -105,6 +104,5 @@ func (r *ImmudbReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Watches(&appsv1.StatefulSet{}, filter).
 		Watches(&corev1.Service{}, filter).
 		Watches(&knetworkingv1.Ingress{}, filter).
-		Watches(&promv1.ServiceMonitor{}, filter).
 		Complete(r)
 }

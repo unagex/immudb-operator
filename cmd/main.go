@@ -45,7 +45,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 	utilruntime.Must(unagexcomv1.AddToScheme(scheme))
-	monitoring.AddToScheme(scheme)
+	utilruntime.Must(monitoring.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
